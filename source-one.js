@@ -11,22 +11,13 @@ window.onload = function() {
             var parentAddr = e.target.parentElement.parentElement;
             var currentField = e.target;
 
-            debugger;
-
             for (var i = 0; i < allAddr.length; i++){
                 var nextAddr = allAddr[i];
                 if (parentAddr == nextAddr) continue;
-                debugger;
+                var fieldToChange = nextAddr.querySelector("input[data-index='"+currentField.getAttribute("data-index")+"']");
+                fieldToChange.value = currentField.value;
             }
 
         }, false);
     });
-
-    // var addr = getAllAddresses;
-    // var $copyFrom = addr[0];
-    // var $copyTo = [addr[2], addr[3], addr[4]];
-    
-    // $copyFrom.addEventListener('change', function(e){
-    //     debugger;
-    // }, false);
 };
