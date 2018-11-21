@@ -11,6 +11,8 @@ window.onload = function() {
             var parentAddr = e.target.parentElement.parentElement;
             var currentField = e.target;
 
+            debugger;
+
             for (var i = 0; i < allAddr.length; i++){
                 var nextAddr = allAddr[i];
                 if (parentAddr == nextAddr) continue;
