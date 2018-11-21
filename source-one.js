@@ -55,11 +55,11 @@ function iFrameReady(iFrame, fn) {
     checkLoaded();
 }
 
-iFrameReady(document.getElementById("form"), function() {
-    var target = this.getElementById("target");
+window.onload = function() {
+    
     debugger;
     var addr = document.querySelectorAll("[data-type=address]");
     var $copyFrom = addr[0];
     var $copyTo = [addr[2], addr[3], addr[4]];
-    //target.innerHTML = "Found It!";
-});
+    
+};
