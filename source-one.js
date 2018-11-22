@@ -6,7 +6,7 @@ var getAllAddresses = function(){
 window.onload = function() {
 
     getAllAddresses().forEach(function(el, ind){
-        var countryField = el.querySelector("[data-index=6]");
+        var countryField = el.querySelector("[data-index='6']");
         
         countryField.onchange = function(e){
             var parentAddr = e.target.parentElement;
