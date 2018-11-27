@@ -3,6 +3,10 @@ var getAllAddresses = function(){
     return [total[0],total[2],total[3],total[4]];
 }
 
+var getAllEmails = function(){
+    return document.querySelectorAll("input[type='email']");
+}
+
 window.onload = function() {
 
     getAllAddresses().forEach(function(el, ind){
@@ -34,5 +38,16 @@ window.onload = function() {
             }
 
         }, false);
+    });
+
+    getAllEmails()[0].addEventListener('change', function(e){
+        var allInputs = getAllEmails();
+        var currentInput = e.target;
+
+        for (var i = 0; i < allInputs.length; i++){
+            var nextInput = allInputs[i];
+            if (nextInput == currentInput) continue;
+            nextInput.value = currentInput.value;
+        }
     });
 };
