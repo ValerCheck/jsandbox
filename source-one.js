@@ -11,7 +11,7 @@ var getAllFaxFields = function(){
     var phonesAndFaxes = document.querySelectorAll("[data-type='phone'] > label[data-role='label']");
     var faxes = [];
     phonesAndFaxes.forEach(function(el){
-        if (el.innerText.toLowerCase() == "fax"){
+        if (el.innerHTML.toLowerCase() == "fax"){
             faxes.push(el);
         }
     });
@@ -56,15 +56,12 @@ window.onload = function() {
         }, false);
     });
 
-    debugger;
     var autoFillFunctions = [getAllEmails, getAllFaxFields];
 
     autoFillFunctions.forEach(function(func){
         func()[0].addEventListener('change', function(e){
             var allInputs = func();
             var currentInput = e.target;
-    
-            debugger;
 
             for (var i = 0; i < allInputs.length; i++){
                 var nextInput = allInputs[i];
