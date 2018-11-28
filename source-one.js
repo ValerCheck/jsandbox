@@ -56,6 +56,7 @@ window.onload = function() {
         }, false);
     });
 
+    debugger;
     var autoFillFunctions = [getAllEmails, getAllFaxFields];
 
     autoFillFunctions.forEach(function(func){
@@ -63,6 +64,8 @@ window.onload = function() {
             var allInputs = func();
             var currentInput = e.target;
     
+            debugger;
+
             for (var i = 0; i < allInputs.length; i++){
                 var nextInput = allInputs[i];
                 if (nextInput == currentInput) continue;
