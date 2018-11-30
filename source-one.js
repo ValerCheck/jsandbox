@@ -1,5 +1,5 @@
 var getAllAddresses = function(){
-    var total = document.querySelectorAll("[data-type=address]");
+    var total = document.querySelectorAll("[data-type='address']");
     return [total[0],total[2],total[3],total[4]];
 }
 
@@ -22,6 +22,17 @@ var fixPrinting = function(){
             });
         }
     })
+}
+
+var getAllDealerNames = function() {
+    var texts = document.querySelectorAll("[data-type='text']");
+    var result = [];
+    texts.forEach(function(e){
+        var label = e.querySelector("label").innerText.replace('"',"").toLowerCase();
+        if (label.startsWith("business legal name") || label.startsWith("dealer name")){
+            result.push(e.querySelector("input"));
+        }
+    });
 }
 
 var getAllFaxFields = function(){
@@ -73,7 +84,7 @@ window.onload = function() {
         }, false);
     });
 
-    var autoFillFunctions = [getAllEmails, getAllFaxFields];
+    var autoFillFunctions = [getAllEmails, getAllFaxFields, getAllDealerNames];
 
     autoFillFunctions.forEach(function(func){
         func()[0].addEventListener('change', function(e){
