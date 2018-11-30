@@ -7,6 +7,23 @@ var getAllEmails = function(){
     return document.querySelectorAll("input[type='email']");
 }
 
+var fixPrinting = function(){
+    var bolds = document.querySelectorAll("b");
+    var result = [];
+    bolds.forEach(function(e){
+        if (e.innerHTML.toLowerCase().startsWith("recitals"))
+        {
+            var header = e.parentElement;
+            var control = header.parentElement;
+            var container = control.parentElement;
+
+            [header, control, container].forEach(function(styleEl){
+                styleEl.style["display"] = "inline";
+            });
+        }
+    })
+}
+
 var getAllFaxFields = function(){
     var phonesAndFaxes = document.querySelectorAll("[data-type='phone'] > label[data-role='label']");
     var faxes = [];
@@ -70,4 +87,6 @@ window.onload = function() {
             }
         });
     });
+
+    
 };
