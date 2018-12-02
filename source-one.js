@@ -105,7 +105,7 @@ window.onload = function() {
                 fieldToChange.value = currentField.value;
                 var event = document.createEvent('Event');
                 event.initEvent(eventType, true, true);
-                nextInput.dispatchEvent(event);
+                fieldToChange.dispatchEvent(event);
             }
 
         }, false);
