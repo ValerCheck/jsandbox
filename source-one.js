@@ -12,7 +12,7 @@ var getPhones = function(){
     var phones = [];
     phonesAndFaxes.forEach(function(el){
         if (el.textContent.toLowerCase() == "phone"){
-            phones.push(el);
+            phones.push(el.parentElement);
         }
     });
 
