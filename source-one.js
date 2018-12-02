@@ -18,7 +18,7 @@ var getPhones = function(){
 
     var result = [];
     [0,phones.length - 1].forEach(function(ind){
-        result.push(allPhones[ind].querySelector("input"));
+        result.push(phones[ind].querySelector("input"));
     });
     return result;
 }
