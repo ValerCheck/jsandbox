@@ -8,9 +8,16 @@ var getAllEmails = function(){
 }
 
 var getPhones = function(){
-    var allPhones = document.querySelectorAll("[data-type='phone']");
+    var phonesAndFaxes = document.querySelectorAll("[data-type='phone'] > label[data-role='label']");
+    var phones = [];
+    phonesAndFaxes.forEach(function(el){
+        if (el.textContent.toLowerCase() == "phone"){
+            phones.push(el);
+        }
+    });
+
     var result = [];
-    [0,allPhones.length - 1].forEach(function(ind){
+    [0,phones.length - 1].forEach(function(ind){
         result.push(allPhones[ind].querySelector("input"));
     });
     return result;
@@ -84,7 +91,9 @@ window.onload = function() {
             }
         };
 
-        el.addEventListener('change', function(e){
+        var eventType = 'change';
+
+        el.addEventListener(eventType, function(e){
             var allAddr = getAllAddresses();
             var parentAddr = e.target.parentElement.parentElement;
             var currentField = e.target;
@@ -94,6 +103,9 @@ window.onload = function() {
                 if (parentAddr == nextAddr) continue;
                 var fieldToChange = nextAddr.querySelector("input[data-index='"+currentField.getAttribute("data-index")+"']");
                 fieldToChange.value = currentField.value;
+                var event = document.createEvent('Event');
+                event.initEvent(eventType, true, true);
+                nextInput.dispatchEvent(event);
             }
 
         }, false);
