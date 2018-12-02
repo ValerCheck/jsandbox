@@ -1,3 +1,8 @@
+var EVENT_NAMES = {
+    CHANGE  : 'change',
+    INPUT   : 'input'
+};
+
 var getAllAddresses = function(){
     var total = document.querySelectorAll("[data-type='address']");
     return [total[0],total[2],total[3],total[4]];
@@ -5,6 +10,18 @@ var getAllAddresses = function(){
 
 var getAllEmails = function(){
     return document.querySelectorAll("input[type='email']");
+}
+
+var getFullNameFields = function(){
+    var fullName = document.querySelector("[data-type='name']").querySelectorAll("input");
+    var result = {first:null,last:null};
+    fullName.forEach(function(e){
+        if (e.getAttribute("data-index")=="1")
+            result.first = e;
+        else
+            result.last = e;
+    });
+    return result;
 }
 
 var getPhones = function(){
@@ -130,6 +147,32 @@ window.onload = function() {
             });
         });
     });
+
+    var fullNameObj = getFullNameFields();
+    [fullNameObj.first, fullNameObj.last].forEach(function(e){
+        e.addEventListener(EVENT_NAMES.CHANGE, function(e){
+            var texts = document.querySelectorAll("[data-type='text']");
+            var result = [];
+            texts.forEach(function(e){ 
+                var label = e.querySelector("label").textContent.toLowerCase();
+                
+                if (label != null && label != undefined){
+                    if (label.includes("contact name")){
+                        result.push(e.querySelector("input"));
+                    }            
+                }
+            });
+
+            results.forEach(function(e){
+                e.value = fullNameObj.first.value + " " + fullNameObj.last.value;
+                var event = document.createEvent('Event');
+                event.initEvent(EVENT_NAMES.CHANGE, true, true);
+                e.dispatchEvent(event);
+            });
+        });
+    })
+
+
 
     //fixPrinting();    
 };
