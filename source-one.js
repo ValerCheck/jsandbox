@@ -163,7 +163,7 @@ window.onload = function() {
                 }
             });
 
-            results.forEach(function(e){
+            result.forEach(function(e){
                 e.value = fullNameObj.first.value + " " + fullNameObj.last.value;
                 var event = document.createEvent('Event');
                 event.initEvent(EVENT_NAMES.CHANGE, true, true);
