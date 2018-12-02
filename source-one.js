@@ -7,6 +7,15 @@ var getAllEmails = function(){
     return document.querySelectorAll("input[type='email']");
 }
 
+var getPhones = function(){
+    var allPhones = document.querySelectorAll("[data-type='phone']");
+    var result = [];
+    [0,allPhones.length - 1].forEach(function(ind){
+        result.push(allPhones[ind].querySelector("input"));
+    });
+    return result;
+}
+
 var fixPrinting = function(){
     var bolds = document.querySelectorAll("b");
     var result = [];
@@ -90,18 +99,23 @@ window.onload = function() {
         }, false);
     });
 
-    var autoFillFunctions = [getAllEmails, getAllFaxFields, getAllDealerNames];
+    var autoFillFunctions = [getAllEmails, getAllFaxFields, getAllDealerNames, getPhones];
 
     autoFillFunctions.forEach(function(func){
-        func()[0].addEventListener('change', function(e){
-            var allInputs = func();
-            var currentInput = e.target;
-
-            for (var i = 0; i < allInputs.length; i++){
-                var nextInput = allInputs[i];
-                if (nextInput == currentInput) continue;
-                nextInput.value = currentInput.value;
-            }
+        ['change','input'].forEach(function(ev){
+            func()[0].addEventListener(ev, function(e){
+                var allInputs = func();
+                var currentInput = e.target;
+    
+                for (var i = 0; i < allInputs.length; i++){
+                    var nextInput = allInputs[i];
+                    if (nextInput == currentInput) continue;
+                    nextInput.value = currentInput.value;
+                    var event = document.createEvent('Event');
+                    event.initEvent(ev, true, true);
+                    nextInput.dispatchEvent(event);
+                }
+            });
         });
     });
 
