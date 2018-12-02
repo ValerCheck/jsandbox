@@ -75,7 +75,7 @@ var getAllFaxFields = function(){
 
 window.onload = function() {
 
-    getAllAddresses().forEach(function(el, ind){
+    getAllAddresses()[0].forEach(function(el, ind){
         var countryField = el.querySelector("[data-index='6']");
         
         countryField.onchange = function(e){
@@ -131,5 +131,5 @@ window.onload = function() {
         });
     });
 
-    fixPrinting();    
+    //fixPrinting();    
 };
