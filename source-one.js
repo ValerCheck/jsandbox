@@ -32,7 +32,7 @@ var getAllDealerNames = function() {
         var label = e.querySelector("label").innerText;
         
         if (label != null && label != undefined){
-            label = label.split('"').joing("").toLowerCase();
+            label = label.split('"').join("").toLowerCase();
             if (label.startsWith("business legal name") || label.startsWith("dealer name")){
                 result.push(e.querySelector("input"));
             }            
