@@ -29,7 +29,7 @@ var getAllDealerNames = function() {
     var result = [];
     texts.forEach(function(e){
         
-        var label = e.querySelector("label").innerText;
+        var label = e.querySelector("label").textContent;
         
         if (label != null && label != undefined){
             label = label.split('"').join("").toLowerCase();
