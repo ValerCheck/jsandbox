@@ -90,11 +90,19 @@ var getAllFaxFields = function(){
     return result;
 }
 
+var SendEvent = function(eventName, htmlElement){
+    var event = document.createEvent('Event');
+    event.initEvent(eventName, true, true);
+    htmlElement.dispatchEvent(event);
+}
+
 window.onload = function() {
 
     [getAllAddresses()[0]].forEach(function(el, ind){
         var countryField = el.querySelector("[data-index='6']");
         
+        var eventType = EVENT_NAMES.CHANGE;
+
         countryField.onchange = function(e){
             var parentAddr = e.target.parentElement.parentElement;
             var countryInput = e.target.querySelector("input");
@@ -105,10 +113,10 @@ window.onload = function() {
                 if (parentAddr == nextAddr) continue;
                 var fieldToChange = nextAddr.querySelector("[data-index='6']").querySelector("input");
                 fieldToChange.value = countryInput.value;
+                
+                SendEvent(eventType, fieldToChange);
             }
         };
-
-        var eventType = 'change';
 
         el.addEventListener(eventType, function(e){
             var allAddr = getAllAddresses();
@@ -119,10 +127,8 @@ window.onload = function() {
                 var nextAddr = allAddr[i];
                 if (parentAddr == nextAddr) continue;
                 var fieldToChange = nextAddr.querySelector("input[data-index='"+currentField.getAttribute("data-index")+"']");
-                fieldToChange.value = currentField.value;
-                var event = document.createEvent('Event');
-                event.initEvent(eventType, true, true);
-                fieldToChange.dispatchEvent(event);
+                fieldToChange.value = currentField.value;                
+                SendEvent(eventType, fieldToChange);
             }
 
         }, false);
@@ -131,7 +137,8 @@ window.onload = function() {
     var autoFillFunctions = [getAllEmails, getAllFaxFields, getAllDealerNames, getPhones];
 
     autoFillFunctions.forEach(function(func){
-        ['change','input'].forEach(function(ev){
+        [EVENT_NAMES.CHANGE,
+         EVENT_NAMES.INPUT].forEach(function(ev){
             func()[0].addEventListener(ev, function(e){
                 var allInputs = func();
                 var currentInput = e.target;
@@ -140,9 +147,7 @@ window.onload = function() {
                     var nextInput = allInputs[i];
                     if (nextInput == currentInput) continue;
                     nextInput.value = currentInput.value;
-                    var event = document.createEvent('Event');
-                    event.initEvent(ev, true, true);
-                    nextInput.dispatchEvent(event);
+                    SendEvent(ev, nextInput);
                 }
             });
         });
@@ -165,9 +170,8 @@ window.onload = function() {
 
             result.forEach(function(e){
                 e.value = fullNameObj.first.value + " " + fullNameObj.last.value;
-                var event = document.createEvent('Event');
-                event.initEvent(EVENT_NAMES.CHANGE, true, true);
-                e.dispatchEvent(event);
+
+                SendEvent(EVENT_NAMES.CHANGE, e);
             });
         });
     })
