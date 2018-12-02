@@ -28,9 +28,14 @@ var getAllDealerNames = function() {
     var texts = document.querySelectorAll("[data-type='text']");
     var result = [];
     texts.forEach(function(e){
-        var label = e.querySelector("label").innerHTML.replace('"',"").toLowerCase();
-        if (label.startsWith("business legal name") || label.startsWith("dealer name")){
-            result.push(e.querySelector("input"));
+        
+        var label = e.querySelector("label").innerText;
+        
+        if (label != null && label != undefined){
+            label = label.split('"').joing("").toLowerCase();
+            if (label.startsWith("business legal name") || label.startsWith("dealer name")){
+                result.push(e.querySelector("input"));
+            }            
         }
     });
     return result;
