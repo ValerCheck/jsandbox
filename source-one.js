@@ -11,7 +11,7 @@ var SELECTORS = {
 }
 
 var getCountryInput = function(elem){
-    return elem.querySelector(COUNTRY_SELECTOR).querySelector("input");
+    return elem.querySelector(SELECTORS.COUNTRY).querySelector("input");
 }
 
 var getAllAddresses = function(){
