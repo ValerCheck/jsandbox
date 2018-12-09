@@ -103,8 +103,16 @@ var getAllFaxFields = function(){
 
 var SendEvent = function(eventName, htmlElement){
     var event = document.createEvent('Event');
-    event.initEvent(eventName, true, true);
+    event.initEvent(eventName, true, false);
     htmlElement.dispatchEvent(event);
+}
+
+var find = function(el, selector){
+    return el.querySelector(selector);
+}
+
+var findInput = function(el){
+    return find(el, "input");
 }
 
 window.onload = function() {
@@ -112,23 +120,22 @@ window.onload = function() {
     var allAddresses = getAllAddresses();
 
     [allAddresses[0]].forEach(function(el, ind){
-        var countryField = getCountryInput(el);
+        var countryField = el.querySelector(SELECTORS.COUNTRY);
         var eventType = EVENT_NAMES.CHANGE;
 
-        countryField.addEventListener(eventType, function(e){
-            var parentAddr = e.target.parentElement.parentElement.parentElement;
-            var countryInput = e.target;
+        countryField.onchange = function(e){
+            
+            var parentAddr = e.target.parentElement.parentElement;
 
             for (var i = 0; i < allAddresses.length; i++){
                 var nextAddr = allAddresses[i];
                 if (parentAddr == nextAddr) continue;
-
-                var fieldToChange = getCountryInput(nextAddr);
-                fieldToChange.value = countryInput.value;
-                
-                SendEvent(eventType, fieldToChange);
+                var fieldToChange = nextAddr.querySelector(SELECTORS.COUNTRY);
+                fieldToChange.value = e.target.value;
+                findInput(fieldToChange).value = findInput(e.target).value;
+                SendEvent(EVENT_NAMES.CHANGE, fieldToChange);
             }
-        });
+        };
 
         el.addEventListener(eventType, function(e){
             var parentAddr = e.target.parentElement.parentElement;
