@@ -3,12 +3,19 @@ var EVENT_NAMES = {
     INPUT   : 'input'
 };
 
+var SELECTORS = {
+    COUNTRY         : "[data-index='6']",
+    DTYPE_ADDRESS   : "[data-type='address']",
+    DTYPE_NAME      : "[data-type='name']",
+    DTYPE_TEXT      : "[data-type='text']"
+}
+
 var getCountryInput = function(elem){
     return elem.querySelector(COUNTRY_SELECTOR).querySelector("input");
 }
 
 var getAllAddresses = function(){
-    var total = document.querySelectorAll("[data-type='address']");
+    var total = document.querySelectorAll(SELECTORS.DTYPE_ADDRESS);
     return [total[0],total[2],total[3],total[4]];
 }
 
@@ -17,7 +24,7 @@ var getAllEmails = function(){
 }
 
 var getFullNameFields = function(){
-    var fullName = document.querySelector("[data-type='name']").querySelectorAll("input");
+    var fullName = document.querySelector(SELECTORS.DTYPE_NAME).querySelectorAll("input");
     var result = {first:null,last:null};
     fullName.forEach(function(e){
         if (e.getAttribute("data-index")=="1")
@@ -62,7 +69,7 @@ var fixPrinting = function(){
 }
 
 var getAllDealerNames = function() {
-    var texts = document.querySelectorAll("[data-type='text']");
+    var texts = document.querySelectorAll(SELECTORS.DTYPE_TEXT);
     var result = [];
     texts.forEach(function(e){
         
@@ -105,9 +112,6 @@ window.onload = function() {
     var allAddresses = getAllAddresses();
 
     [allAddresses[0]].forEach(function(el, ind){
-  
-        var COUNTRY_SELECTOR = "[data-index='6']";
-
         var countryField = getCountryInput(el);
         var eventType = EVENT_NAMES.CHANGE;
 
@@ -118,7 +122,7 @@ window.onload = function() {
             for (var i = 0; i < allAddresses.length; i++){
                 var nextAddr = allAddresses[i];
                 if (parentAddr == nextAddr) continue;
-                
+
                 var fieldToChange = getCountryInput(nextAddr);
                 fieldToChange.value = countryInput.value;
                 
@@ -163,7 +167,7 @@ window.onload = function() {
     var fullNameObj = getFullNameFields();
     [fullNameObj.first, fullNameObj.last].forEach(function(e){
         e.addEventListener(EVENT_NAMES.CHANGE, function(e){
-            var texts = document.querySelectorAll("[data-type='text']");
+            var texts = document.querySelectorAll(SELECTORS.DTYPE_TEXT);
             var result = [];
             texts.forEach(function(e){ 
                 var label = e.querySelector("label").textContent.toLowerCase();
