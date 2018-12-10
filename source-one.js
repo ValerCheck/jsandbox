@@ -63,6 +63,7 @@ var fixPrinting = function(){
 
             [header, control, container].forEach(function(styleEl){
                 styleEl.style["display"] = "inline";
+                styleEl.style["page-break-inside"] = "avoid";
             });
         }
     })
@@ -192,9 +193,7 @@ window.onload = function() {
                 SendEvent(EVENT_NAMES.CHANGE, e);
             });
         });
-    })
+    });
 
-
-
-    //fixPrinting();    
+    fixPrinting();    
 };
