@@ -195,5 +195,5 @@ window.onload = function() {
         });
     });
 
-    fixPrinting();    
+    //fixPrinting();    
 };
